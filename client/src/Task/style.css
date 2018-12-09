@@ -1,0 +1,40 @@
+.task-container {
+    border: 1px solid #80808045;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    margin: 10px 0px 10px 0px;
+    padding: 4px 3px 8px 20px;
+    position: relative;
+}
+
+.task-container .actions {
+    position: absolute;
+    top: 5px;
+    right: 4px;
+}
+
+.task-container .actions {
+    display: inline-block;
+}
+
+.task-container .actions i {
+    display: inline-block;
+}
+
+.task-container .actions .icon {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.task-container .actions .icon.remove-icon {
+    background-image: url('../images/remove-icon.png');
+    background-size: 100%;
+}
+
+.task-container .actions .icon.edit-icon {
+    background-image: url('../images/edit-icon.svg');
+    background-size: 100%;
+}

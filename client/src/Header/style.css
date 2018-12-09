@@ -1,0 +1,10 @@
+.header {
+    height: 80px;
+    background-color: #87CEEB;
+}
+
+.header .title {
+    display: inline-block;
+    margin-left: 30px;
+    color: white;
+}
