@@ -1,9 +1,10 @@
 .task-container {
+    min-height: 30px;
     border: 1px solid #80808045;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     margin: 10px 0px 10px 0px;
-    padding: 4px 3px 8px 20px;
+    padding: 4px 3px 0px 11px;
     position: relative;
 }
 
@@ -37,4 +38,37 @@
 .task-container .actions .icon.edit-icon {
     background-image: url('../images/edit-icon.svg');
     background-size: 100%;
+}
+
+.task-container .complete-control {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.task-container .task-title {
+    margin: 10px 0px 0px 25px;
+}
+
+.task-container .task-description {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.task-container .task-date {
+    font-size: 10.1px;
+    font-weight: bold;
+    color: grey;
+}
+
+.add-task-button {
+    border-radius: 100px;
+    line-height: 1.6;
+    padding: 7px 12px;
+}
+
+.add-task-button > span {
+    margin: 0 !important;
 }

@@ -4,17 +4,22 @@ import Controls from './Controls'
 class TaskContainer extends Component {
     
     render() {
-        const { children, ID, onEdit, onDelete, onChangeStatus } = this.props;
+        const { children, taskId, completed, onEdit, onDelete, onComplete } = this.props;
+        
         return (
-        <div className='task-container'>
+        <div 
+            className='task-container'
+            onDoubleClick={() => onEdit(taskId)}
+        >
             <div className='content'>
                 {children}
             </div>
             <Controls 
-                ID={ID} 
+                id={taskId}
                 onEdit={onEdit}
                 onDelete={onDelete}
-                onChangeStatus={onChangeStatus}
+                onComplete={onComplete}
+                completed={completed}
             />
         </div>)
     }

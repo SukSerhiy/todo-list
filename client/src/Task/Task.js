@@ -1,87 +1,107 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import TaskContainer from './TaskContainer';
-import TaskField from './TaskField';
-import TaskName from './TaskName';
-import { CREATED, LAST_MODIFIED_DATE } from '../constants/en';
-import deleteTask from '../api/api.deleteTask';
+import { EditTask as EditTaskModal } from '../modals/EditTask'
+import { editTask, deleteTask, completeTask } from '../api/Task';
 
 import './style.css';
 
-const dataSetCreator = (name, value) => {
-    return {
-        name,
-        value
-    }
-};
-
 class Task extends Component {
     static propTypes = {
-        name: PropTypes.string.isRequired,
-        creationDate: PropTypes.instanceOf(Date),
-        lastModifiedDate: PropTypes.instanceOf(Date)
+        data: PropTypes.shape({
+            name: PropTypes.string,
+            description: PropTypes.string,
+        }),
+        createdDate: PropTypes.instanceOf(Date),
+        modifyDate: PropTypes.instanceOf(Date),
     };
 
     static defaultProps = {
-        creationDate: new Date(),
-        lastModifiedDate: new Date()
-    };
-
-    handleEdit(ID) {
-        alert(`edit: ${ID}`);
+        data: []
     }
 
-    handleDelete(ID) {
+    constructor(props) {
+        super(props);
+        this.modalRef = React.createRef();
+
+        this.handleEdit = this.handleEdit.bind(this);
+    }
+
+    openEditModal() {
+        const { modalRef } = this;
+        modalRef && modalRef.current && modalRef.current.openModal();
+    }
+
+    handleEdit(task) {
         const { loadData } = this.props;
-        deleteTask(ID)
+        const id = task['_id'];
+        delete task['_id'];
+        editTask(id, task)
+        .then(() => {
+            loadData()
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+
+    handleDelete(id) {
+        const { loadData } = this.props;
+        deleteTask(id)
         .then(() => {
             loadData && loadData();
         })
-        .catch(error => {
-            console.error(error);
-        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
-    handleChangeStatus(ID) {
-
+    handleComplete(id) {
+        const { loadData } = this.props;
+        completeTask(id)
+        .then(() => {
+            loadData && loadData();
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
     render() {
-        const { ID, name, creationDate, lastModifiedDate } = this.props;
-
-        const dataSet = {
-            'creationDate': dataSetCreator(
-                CREATED,
-                creationDate.toLocaleString()
-            ),
-            'lastModifiedDate': dataSetCreator(
-                LAST_MODIFIED_DATE,
-                lastModifiedDate.toLocaleString()
-            )
-        };
+        const { modalRef } = this;
+        const { data,
+            data: {
+            _id, name, description, endDate, completed
+        } } = this.props;
 
         return (
-        <TaskContainer 
-            ID={ID}
-            onEdit={this.handleEdit.bind(this)}
-            onDelete={this.handleDelete.bind(this)}
-            onChangeStatus={this.handleChangeStatus.bind(this)}
-        >
-                <Fragment>
-                    <TaskName 
-                        name={name}
-                    />
-                    {Object.keys(dataSet).map((prop, idx) => {
-                        const {name, value} = dataSet[prop];
-                        return (
-                        <TaskField 
-                            key={idx} 
-                            name={name}
-                            value={value} 
-                        />)
-                    })}
-                </Fragment>
-            </TaskContainer>
+            <TaskContainer 
+                taskId={_id}
+                completed={completed}
+                onEdit={this.openEditModal.bind(this)}
+                onDelete={this.handleDelete.bind(this)}
+                onComplete={this.handleComplete.bind(this)}
+            >
+                    <Fragment>
+                        <h5 className='task-title'>
+                            {name}
+                        </h5>
+
+                        <div className='task-description'>
+                            {description}
+                        </div>
+
+                        <div className='task-date'>
+                            {endDate}
+                        </div>
+
+                        <EditTaskModal 
+                            ref={ modalRef }
+                            task={data}
+                            submit={this.handleEdit}
+                        />
+                    </Fragment>
+                </TaskContainer>
         )
     }
 }

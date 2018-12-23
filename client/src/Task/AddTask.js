@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'element-react';
-import { AddTask as AddTaskModal } from '../modals/AddTask'
-import insertTask from '../api/api.insertTask';
+import { EditTask as AddTaskModal } from '../modals/EditTask'
+import { insertTask } from '../api/Task';
 
 class AddTask extends Component {
     constructor(props) {
@@ -27,13 +27,14 @@ class AddTask extends Component {
     render() {
         const { 
             saveTask, 
-            modalRef, 
-            props: { title } 
+            modalRef,
         } = this;
         return (<div>
-            <Button onClick={this.handleClick.bind(this)}>
-                {title}
-            </Button>
+            <Button 
+                className='add-task-button'
+                icon='plus' 
+                onClick={this.handleClick.bind(this)} 
+            />
             <AddTaskModal 
                 ref={ modalRef }
                 submit={saveTask}

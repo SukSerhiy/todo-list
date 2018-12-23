@@ -1,27 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox } from 'element-react';
 import Action from './action';
-import { Button } from 'element-react';
 
 const Controls = props => {
-    const { ID, onEdit, onDelete } = props;
+    const { id, onEdit, onDelete, completed, onComplete } = props;
+    console.log(completed);
     return (
         <div className='controls'>
-            <div className='actions'>
-                <Action 
-                    className='edit-icon' 
-                    onClick={() => onEdit(ID)} 
-                />
-                <Action 
-                    className='remove-icon' 
-                    onClick={() => onDelete(ID)}
+            <div className='complete-control'>
+                <Checkbox 
+                    checked={completed} 
+                    onChange={() => onComplete(id)}
                 />
             </div>
 
-            <Button>
-                Mark as resolved
-            </Button>
+            <div className='actions'>
+                <Action 
+                    className='edit-icon' 
+                    onClick={() => onEdit(id)} 
+                />
+                <Action 
+                    className='remove-icon' 
+                    onClick={() => onDelete(id)} 
+                />
+            </div>
         </div>
     )
+}
+
+Controls.propTypes = {
+    id: PropTypes.string.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    completed: PropTypes.bool.isRequired
+}
+
+Controls.defaultProps = {
+    completed: false
 }
 
 export default Controls;

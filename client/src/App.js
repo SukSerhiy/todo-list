@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import 'element-theme-default';
 import { Header } from './Header'
 import { Content } from './Content'
-import getTasks from './api/api.getTasks';
+import { getTasks } from './api/Task';
 import './App.css'
+import './timepicker.css';
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

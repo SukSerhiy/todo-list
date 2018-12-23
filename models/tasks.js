@@ -1,21 +1,28 @@
-const db = require('.././db');
-const ObjectId = require('mongodb').ObjectId;
-const TASKS = 'tasks';
+const mongoose = require('mongoose'),
+    taskScheme = require('../schemas/task'),
+    Task = mongoose.model('Task', taskScheme),
+    ObjectId = require('mongodb').ObjectId;
 
-exports.all = function(cb) {
-    db.get().collection(TASKS).find().toArray(function(err, docs) {
-        cb(err, docs);
-    })
+exports.all = (cb) => {
+    Task.find({}, cb);
 }
 
-exports.findById = function(id, cb) {
-    db.collection(TASKS).findOne({ _id: ObjectId(id) }, function(err, doc) {
-        cb(err, doc);
-    })
+exports.findById = (id, cb) => {
+    Task.findById(id, cb);
 }
 
-// exports.create = function(task, cb) {
-//     db.get().collection(TASKS).insertOne(req.body, function(err, res) {
-//         cb(err, res)
-//     })
-// }
+exports.create = (data, cb) => {
+    Task.create(data, cb);
+}
+
+exports.update = (id, params, cb) => {
+    Task.updateOne(
+        { _id: ObjectId(id) },
+        params,
+        cb
+    );
+}
+
+exports.delete = (id, cb) => {
+    Task.deleteOne({ _id: ObjectId(id) }, cb);
+}

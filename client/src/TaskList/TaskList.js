@@ -9,8 +9,7 @@ const TaskList = props => {
             {data.map((task, idx) => (
                 <Task
                     key={idx}
-                    ID={task._id}
-                    name={task.name}
+                    data={task}
                     loadData={loadData}
                 />
             ))}
@@ -20,7 +19,7 @@ const TaskList = props => {
 
 TaskList.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
-        ID: PropTypes.number.isRequired,
+        //ID: PropTypes.number.isRequired,
         name: PropTypes.string
     }))
 };
