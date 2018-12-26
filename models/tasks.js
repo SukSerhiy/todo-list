@@ -16,6 +16,7 @@ exports.create = (data, cb) => {
 }
 
 exports.update = (id, params, cb) => {
+    Object.assign(params, {modifyDate: new Date()});
     Task.updateOne(
         { _id: ObjectId(id) },
         params,

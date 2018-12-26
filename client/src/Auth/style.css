@@ -1,0 +1,12 @@
+.auth {
+    text-align: center;
+}
+
+.auth > .auth-form-container {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.auth > .auth-form-container > .auth-form {
+    text-align: left;
+}

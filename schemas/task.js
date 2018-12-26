@@ -12,8 +12,14 @@ const taskScheme = new Schema({
         type: Boolean,
         default: false
       },
-      createDate: Date,
-      modifyDate: Date
+      createDate: {
+        type: Date,
+        default: new Date()
+      },
+      modifyDate: {
+        type: Date,
+        default: new Date()
+      }
    },
    {
      versionKey: false

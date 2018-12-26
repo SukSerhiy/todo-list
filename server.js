@@ -2,13 +2,31 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongodb = require('mongodb'),
   mongoose = require("mongoose"),
+  morgan = require('morgan'),
+  apiRoutes = express.Router(),
   app = express(),
-  tasksController = require('./controllers/tasks');
+  tasksController = require('./controllers/tasks'),
+  userController = require('./controllers/users'),
+  config = require('./config');
+
+port = 5000;
+global.app = app;
+
+app.set('superSecret', config.secret);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/getTasks', tasksController.all);
+app.use(morgan('dev'));
+
+function ensureAuthenticated(req, res, next) {
+  return res.status(403).send({ 
+      success: false, 
+      message: 'No token provided.' 
+  });
+}
+
+app.get('/api/getTasks', ensureAuthenticated, tasksController.all);
 
 app.get('/api/getTaskById', tasksController.findById);
 
@@ -18,12 +36,12 @@ app.post('/api/updateTask', tasksController.update);
 
 app.delete('/api/deleteTask', tasksController.delete);
 
-const port = 5000;
+app.post('/api/createUser', userController.create);
+
+app.post('/api/authenticate', userController.authenticate);
 
 mongoose.connect(
-  'mongodb://localhost:27017/todo_list', 
-  { useNewUrlParser: true }, 
-  function(err) {
+  config.database, { useNewUrlParser: true }, function(err) {
     if (err) {
       return console.log(err);
     }

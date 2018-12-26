@@ -5,40 +5,26 @@ import { Content } from './Content'
 import { getTasks } from './api/Task';
 import './App.css'
 import './timepicker.css';
+import Home from './Home';
+import Auth from './Auth';
+import { Route, Link } from 'react-router-dom';
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      isAuthenticated: false
     };
-
-    this.loadData = this.loadData.bind(this);
-  }
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  loadData() {
-    getTasks()
-      .then(tasks => {
-        this.setState({ tasks })
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
   render() {
     const { tasks } = this.state;
+    console.log(this.props);
     return (
-      <div className="App">
+      <div className='App'>
         <Header />
-        <Content 
-          tasks={tasks} 
-          loadData={this.loadData} 
-        />
+        <Route path='/' exact component={Home} />
+        <Route path='/auth' component={Auth} />
       </div>
     );
   }
