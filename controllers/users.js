@@ -1,15 +1,6 @@
 const Users = require('../models/users'),
+    saltHashPassword = require('../utils/cryptoUtils'),
     jwt = require('jsonwebtoken');
-
-exports.create = (req, res) => {
-    Users.create(req.body, (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.sendStatus(500);
-        }
-        return res.sendStatus(200);
-    });
-}
 
 exports.authenticate = (req, res) => {
     const { name, password } = req.body;
@@ -33,11 +24,25 @@ exports.authenticate = (req, res) => {
                     expiresIn : 60 * 60 * 24
                 });
 
+                console.log(token)
+
                 res.json({
                     success: true,
                     token: token
                 });
             }
         }
+    });
+}
+
+exports.registrate = (req, res) => {
+    const { email, password } = req.body;
+    const { passwordHash, salt } = saltHashPassword(password);
+    Users.create({email, passwordHash, salt}, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        return res.sendStatus(200);
     });
 }

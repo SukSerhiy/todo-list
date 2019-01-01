@@ -2,7 +2,6 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongodb = require('mongodb'),
   mongoose = require("mongoose"),
-  morgan = require('morgan'),
   apiRoutes = express.Router(),
   app = express(),
   tasksController = require('./controllers/tasks'),
@@ -17,13 +16,22 @@ app.set('superSecret', config.secret);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(morgan('dev'));
-
 function ensureAuthenticated(req, res, next) {
-  return res.status(403).send({ 
+  const { token } = req.body;
+  if (token) {
+    jwt.verify(token, app.get('superSecret'), (err, decoded) => {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      }
+      req.decoded = decoded;
+      next();
+    })
+  } else {
+    return res.status(403).send({ 
       success: false, 
       message: 'No token provided.' 
   });
+  }
 }
 
 app.get('/api/getTasks', ensureAuthenticated, tasksController.all);
@@ -36,9 +44,9 @@ app.post('/api/updateTask', tasksController.update);
 
 app.delete('/api/deleteTask', tasksController.delete);
 
-app.post('/api/createUser', userController.create);
-
 app.post('/api/authenticate', userController.authenticate);
+
+app.post('/api/registrateUser', userController.registrate);
 
 mongoose.connect(
   config.database, { useNewUrlParser: true }, function(err) {

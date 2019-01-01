@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Input, Button, Loading } from 'element-react';
+import { authenticate } from '../api/User';
 
 class AuthForm extends Component {
     constructor(props) {
@@ -11,6 +12,23 @@ class AuthForm extends Component {
             },
             isLoading: false
         };
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit() {
+        const { form: { email, password } } = this.state;
+        authenticate({email, password})
+        .then(result => {
+            if (result.success) {
+                localStorage.setItem('id_token', result.token)
+            } else {
+                alert(result.message);
+            }
+        })
+        .catch(err => {
+            debugger;
+        })
     }
 
     onFieldChange(field, value) {
@@ -32,7 +50,7 @@ class AuthForm extends Component {
             },
             isLoading
          } = this.state;
-        const { onSubmit } = this.props;
+        //const { onSubmit } = this.props;
         
 
         return (<Fragment>
@@ -56,7 +74,7 @@ class AuthForm extends Component {
                     />
                 </Form.Item>
 
-                <Button>
+                <Button onClick={this.onSubmit}>
                     Sign in
                 </Button>
             </Form>}

@@ -6,10 +6,14 @@ const userScheme = new Schema({
         type: String,
         required: true
     }, 
-    password: {
+    passwordHash: {
         type: String,
         required: true
-    }, 
+    },
+    salt: {
+        type: String,
+        required: true
+    },
     admin: {
         type: Boolean,
         default: false
