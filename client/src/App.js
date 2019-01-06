@@ -7,6 +7,7 @@ import './App.css'
 import './timepicker.css';
 import Home from './Home';
 import Auth from './Auth';
+import SignUp from './SignUp';
 import { Route, Link } from 'react-router-dom';
 
 class App extends PureComponent {
@@ -25,6 +26,7 @@ class App extends PureComponent {
         <Header />
         <Route path='/' exact component={Home} />
         <Route path='/auth' component={Auth} />
+        <Route path='/signUp' component={SignUp} />
       </div>
     );
   }

@@ -1,13 +1,28 @@
 import React from 'react';
-import AuthForm from './AuthForm'
+import SignForm from '../Shared/SignForm';
+import { authenticate } from '../api/User';
 import './style.css'
 
-const Auth = props => (
-    <div className='auth'>
-        <div className='auth-form-container'>
-            <AuthForm />
+const Auth = props => {
+    const onSubmit = (email, password) => {
+        authenticate(email, password)
+        .then(res => {
+            debugger;
+        })
+        .catch(err => {
+            debugger;
+        });
+    }
+
+    return (
+        <div className='auth'>
+            <div className='auth-form-container'>
+                <SignForm
+                    onSubmit={ onSubmit }
+                />
+            </div>
         </div>
-    </div>
-)
+    );
+}
 
 export default Auth;

@@ -16,7 +16,7 @@ app.set('superSecret', config.secret);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-function ensureAuthenticated(req, res, next) {
+const ensureAuthenticated = (req, res, next) => {
   const { token } = req.body;
   if (token) {
     jwt.verify(token, app.get('superSecret'), (err, decoded) => {
