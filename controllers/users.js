@@ -37,6 +37,7 @@ exports.authenticate = (req, res) => {
 
 exports.registrate = (req, res) => {
     const { email, password } = req.body;
+    
     const { passwordHash, salt } = saltHashPassword(password);
     Users.create({email, passwordHash, salt}, (err, result) => {
         if (err) {
