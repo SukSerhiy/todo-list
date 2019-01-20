@@ -19,21 +19,17 @@ const genRandomString = (length) =>
 const sha512 = (password, salt) => {
     const hash = crypto.createHmac('sha512', salt);
     hash.update(password);
-    const value = hash.digest('hex');
-    return {
-        salt:salt,
-        passwordHash:value
-    };
+    const passwordHash = hash.digest('hex');
+    return passwordHash;
 }
 
 const saltHashPassword = (password) => {
     const salt = genRandomString(16);
-    const passwordData = sha512(password, salt);
-    const { passwordHash } = passwordData;
+    const passwordHash = sha512(password, salt);
     return {
         passwordHash, 
         salt
     };
 }
 
-module.exports = saltHashPassword;
+module.exports = { sha512, saltHashPassword };

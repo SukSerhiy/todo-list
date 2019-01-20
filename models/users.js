@@ -6,6 +6,6 @@ exports.create = (data, cb) => {
     User.create(data, cb);
 }
 
-exports.findByName = (name, cb) => {
-    User.findOne(name, cb);
+exports.findByEmail = (email, cb) => {
+    User.findOne(email, cb);
 }

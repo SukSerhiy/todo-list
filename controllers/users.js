@@ -1,21 +1,31 @@
 const Users = require('../models/users'),
-    saltHashPassword = require('../utils/cryptoUtils'),
-    jwt = require('jsonwebtoken');
+    cryptoUtils = require('../utils/cryptoUtils'),
+    jwt = require('jsonwebtoken'),
+    saltHashPassword = cryptoUtils.saltHashPassword,
+    sha512 = cryptoUtils.sha512;
 
 exports.authenticate = (req, res) => {
-    const { name, password } = req.body;
-    Users.findByName({ name }, (err, user) => {
+    const { email, password } = req.body;
+    Users.findByEmail({ email }, (err, user) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
         }
         if (!user) {
+            console.log('Authentication failed. User not found.');
             res.json({ success: false, message: 'Authentication failed. User not found.' });
         } else {
-
-            if (user.password !== password) {
-                res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+            const { passwordHash, salt } = user;
+            const enteredPassHash = sha512(password, salt);
+            if (user.passwordHash !== enteredPassHash) {
+                console.log('Authentication failed. Wrong password.')
+                res.json({ 
+                    success: false, 
+                    message: 'Authentication failed. Wrong password.',
+                    over: 'sdfsdf'
+                 });
             } else {
+                console.log('Everything all right');
                 const payload = {
                     admin: user.admin
                 };
@@ -24,7 +34,7 @@ exports.authenticate = (req, res) => {
                     expiresIn : 60 * 60 * 24
                 });
 
-                console.log(token)
+                res.setHeader('Set-Cookie', 'name=Serhii');
 
                 res.json({
                     success: true,

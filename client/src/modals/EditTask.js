@@ -154,4 +154,4 @@ class EditTask extends Component {
     }
 }
 
-export { EditTask };
+export default EditTask;

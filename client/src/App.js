@@ -2,13 +2,31 @@ import React, { PureComponent } from 'react';
 import 'element-theme-default';
 import { Header } from './Header'
 import { Content } from './Content'
-import { getTasks } from './api/Task';
 import './App.css'
 import './timepicker.css';
 import Home from './Home';
 import Auth from './Auth';
 import SignUp from './SignUp';
+import Tasks from './Tasks';
 import { Route, Link } from 'react-router-dom';
+
+const routes = [
+  {
+    path: '/',
+    exact: true,
+    component: Home,
+    onLogin: 'sdfsd'
+  },
+  {
+    path: '/tasks',
+    isProtected: true,
+    component: Tasks,
+  },
+  {
+    path: '/signUp',
+    component: SignUp,
+  }
+]
 
 class App extends PureComponent {
   constructor(props) {
@@ -18,17 +36,29 @@ class App extends PureComponent {
     };
   }
 
+  handleAuthentication = () => {
+    this.setState({ isAuthenticated: true });
+  }
+
   render() {
-    const { tasks } = this.state;
-    console.log(this.props);
+    const { isAuthenticated } = this.state;
     return (
       <div className='App'>
         <Header />
-        <Route path='/' exact component={Home} />
-        <Route path='/auth' component={Auth} />
-        <Route path='/signUp' component={SignUp} />
+        {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
+          <Route 
+            key={key}
+            path={path} 
+            exact={exact}
+            render={(props) => (
+              isProtected && !isAuthenticated ? 
+              <Auth onLogin={this.handleAuthentication} /> :
+              <C {...rest} />
+            )} 
+          />))
+        }
       </div>
-    );
+    )
   }
 }
 

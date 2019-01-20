@@ -4,13 +4,14 @@ import { authenticate } from '../api/User';
 import './style.css'
 
 const Auth = props => {
+    const { onLogin } = props;
     const onSubmit = (email, password) => {
-        authenticate(email, password)
+        authenticate({ email, password })
         .then(res => {
-            debugger;
+            onLogin && onLogin();
         })
         .catch(err => {
-            debugger;
+            console.error(err);
         });
     }
 

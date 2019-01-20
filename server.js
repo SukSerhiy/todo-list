@@ -34,7 +34,7 @@ const ensureAuthenticated = (req, res, next) => {
   }
 }
 
-app.get('/api/getTasks', ensureAuthenticated, tasksController.all);
+app.get('/api/getTasks', /*ensureAuthenticated,*/ tasksController.all);
 
 app.get('/api/getTaskById', tasksController.findById);
 

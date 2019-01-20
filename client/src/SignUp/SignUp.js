@@ -5,7 +5,7 @@ import './style.css'
 
 const SignUp = props => {
     const onSubmit = (email, password) => {
-        registrateUser(email, password)
+        registrateUser({ email, password })
         .then(res => {
             debugger;
         })

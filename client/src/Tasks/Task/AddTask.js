@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'element-react';
-import { EditTask as AddTaskModal } from '../modals/EditTask'
-import { insertTask } from '../api/Task';
+import{ EditTask as AddTaskModal} from '../../modals'
+import { insertTask } from '../../api/Task';
 
 class AddTask extends Component {
     constructor(props) {

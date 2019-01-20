@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import TaskContainer from './TaskContainer';
-import { EditTask as EditTaskModal } from '../modals/EditTask'
+import { EditTask as EditTaskModal } from '../modals'
 import { editTask, deleteTask, completeTask } from '../api/Task';
 
 import './style.css';

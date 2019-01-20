@@ -5,12 +5,6 @@ const registrateUser = (userData) => {
             'Content-Type': 'application/json'
         }),
         body: JSON.stringify(userData)
-    })
-    .then(res => {
-        return res.json();
-    })
-    .catch(err => {
-        throw err;
     });
 }
 
