@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
 import 'element-theme-default';
 import { Header } from './Header'
-import { Content } from './Content'
-import './App.css'
-import './timepicker.css';
 import Home from './Home';
 import Auth from './Auth';
 import SignUp from './SignUp';
 import Tasks from './Tasks';
-import { Route, Link } from 'react-router-dom';
+import './App.css'
+import { Route } from 'react-router-dom';
 
 const routes = [
   {

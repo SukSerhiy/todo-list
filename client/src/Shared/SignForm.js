@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Input, Button, Loading } from 'element-react';
-import { authenticate } from '../api/User';
 
 class SignForm extends Component {
     constructor(props) {
