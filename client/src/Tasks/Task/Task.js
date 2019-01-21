@@ -30,28 +30,26 @@ class Task extends Component {
         modalRef && modalRef.current && modalRef.current.openModal();
     }
 
-    handleEdit = (task) => {
+    handleEdit = async (task) => {
         const { loadData } = this.props;
         const id = task['_id'];
         delete task['_id'];
-        editTask(id, task)
-        .then(() => {
-            loadData()
-        })
-        .catch(err => {
+        try {
+            await editTask(id, task);
+            loadData();
+        } catch(err) {
             console.error(err);
-        });
+        }
     }
 
-    handleDelete = (id) => {
+    handleDelete = async (id) => {
         const { loadData } = this.props;
-        deleteTask(id)
-        .then(() => {
+        try {
+            await deleteTask(id);
             loadData && loadData();
-        })
-        .catch(err => {
+        } catch(err) {
             console.error(err);
-        });
+        }
     }
 
     handleComplete = (id) => {

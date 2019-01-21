@@ -1,5 +1,5 @@
-const registrateUser = (userData) => {
-    return fetch('/api/registrateUser', {
+const registrateUser = async (userData) => {
+    await fetch('/api/registrateUser', {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json'

@@ -1,16 +1,10 @@
-const editTask = function(id, params) {
-    return fetch('/api/updateTask', {
+const editTask = async (id, params) => {
+    await fetch('/api/updateTask', {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json'
         }),
         body: JSON.stringify({id, params})
-    })
-    .then((data) => {
-        return;
-    })
-    .catch(error => {
-        throw error;
     })
 }
 

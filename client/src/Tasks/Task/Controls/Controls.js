@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'element-react';
-import Action from './action';
+import Action from './Action';
 
 const Controls = props => {
     const { 

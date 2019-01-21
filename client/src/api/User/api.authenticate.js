@@ -1,24 +1,21 @@
-const authenticate = (userData) => {
+const authenticate = async (userData) => {
     const { email, password } = userData
-    return fetch('/api/authenticate', {
+    const res = await fetch('/api/authenticate', {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json'
         }),
         body: JSON.stringify({ email, password })
-    })
-    .then(res => res.json())
-    .then(resResult => {
-        if (resResult.success === false) {
-            throw new Error(resResult.message);
-        } else {
-            const { token } = resResult;
-            return { token };
-        }
-    })
-    .catch(err => {
-        throw err;
     });
+
+    const resResult = res.json();
+
+    if (resResult.success === false) {
+        throw new Error(resResult.message);
+    } else {
+        const { token } = resResult;
+        return { token };
+    }
 }
 
 export default authenticate;

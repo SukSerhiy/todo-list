@@ -12,14 +12,13 @@ class Tasks extends Component {
         this.loadData();
     }
 
-    loadData = () => {
-        getTasks()
-            .then(data => {
-                this.setState({tasks: data});
-            })
-            .catch(err => {
-                console.error(err);
-            });
+    loadData = async () => {
+        try {
+            const tasks = await getTasks();
+            this.setState({ tasks });
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     render() {

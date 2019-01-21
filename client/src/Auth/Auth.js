@@ -6,14 +6,14 @@ import './style.css'
 
 const Auth = props => {
     const { onLogin } = props;
-    const onSubmit = (email, password) => {
-        authenticate({ email, password })
-        .then(res => {
+    const onSubmit = async (email, password) => {
+        try {
+            const res = await authenticate({ email, password });
+            console.log(res);
             onLogin && onLogin();
-        })
-        .catch(err => {
+        } catch(err) {
             console.error(err);
-        });
+        }
     }
 
     return (

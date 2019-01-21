@@ -7,12 +7,6 @@ const completeTask = function(id) {
             const { completed } = task;
             return editTask(id, { completed: !completed })
         })
-        .then(() => {
-            return;
-        })
-        .catch(error => {
-            throw error;
-        });
 }
 
 export default completeTask;

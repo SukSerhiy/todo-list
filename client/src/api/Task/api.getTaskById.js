@@ -1,14 +1,6 @@
 const getTaskById = function(id) {
     return fetch(`/api/getTaskById?id=${id}`)
-    .then(res => {
-      return res.json();
-    })
-    .then(task => {
-      return task;
-    })
-    .catch(error => {
-      throw error;
-    });
+    .then(res => res.json())
 }
 
 export default getTaskById;

@@ -15,12 +15,6 @@ const insertTask = function(taskData) {
         }),
         body: JSON.stringify(task)
     })
-    .then((data) => {
-        return;
-    })
-    .catch(error => {
-        throw error;
-    })
 }
 
 export default insertTask;

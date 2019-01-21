@@ -4,14 +4,14 @@ import { registrateUser } from '../api/User';
 import './style.css'
 
 const SignUp = props => {
-    const onSubmit = (email, password) => {
-        registrateUser({ email, password })
-        .then(res => {
+    const onSubmit = async (email, password) => {
+        try {
+            const res = await registrateUser({ email, password });
+            console.log(res);
             debugger;
-        })
-        .catch(err => {
+        } catch(err) {
             debugger;
-        });
+        }
     }
 
     return (
