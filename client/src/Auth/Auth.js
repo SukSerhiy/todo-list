@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SignForm from '../Shared/SignForm';
 import { authenticate } from '../api/User';
 import './style.css'
@@ -25,5 +26,9 @@ const Auth = props => {
         </div>
     );
 }
+
+Auth.propTypes = {
+    onLogin: PropTypes.func
+};
 
 export default Auth;

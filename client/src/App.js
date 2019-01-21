@@ -1,19 +1,18 @@
 import React, { PureComponent } from 'react';
 import 'element-theme-default';
+import { Route } from 'react-router-dom';
 import { Header } from './Header'
 import Home from './Home';
 import Auth from './Auth';
 import SignUp from './SignUp';
 import Tasks from './Tasks';
-import './App.css'
-import { Route } from 'react-router-dom';
+import './App.css';
 
 const routes = [
   {
     path: '/',
     exact: true,
-    component: Home,
-    onLogin: 'sdfsd'
+    component: Home
   },
   {
     path: '/tasks',

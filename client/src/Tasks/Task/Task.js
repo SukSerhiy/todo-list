@@ -23,16 +23,14 @@ class Task extends Component {
     constructor(props) {
         super(props);
         this.modalRef = React.createRef();
-
-        this.handleEdit = this.handleEdit.bind(this);
     }
 
-    openEditModal() {
+    openEditModal = () => {
         const { modalRef } = this;
         modalRef && modalRef.current && modalRef.current.openModal();
     }
 
-    handleEdit(task) {
+    handleEdit = (task) => {
         const { loadData } = this.props;
         const id = task['_id'];
         delete task['_id'];
@@ -45,7 +43,7 @@ class Task extends Component {
         });
     }
 
-    handleDelete(id) {
+    handleDelete = (id) => {
         const { loadData } = this.props;
         deleteTask(id)
         .then(() => {
@@ -56,7 +54,7 @@ class Task extends Component {
         });
     }
 
-    handleComplete(id) {
+    handleComplete = (id) => {
         const { loadData } = this.props;
         completeTask(id)
         .then(() => {
@@ -78,9 +76,9 @@ class Task extends Component {
             <TaskContainer 
                 taskId={_id}
                 completed={completed}
-                onEdit={this.openEditModal.bind(this)}
-                onDelete={this.handleDelete.bind(this)}
-                onComplete={this.handleComplete.bind(this)}
+                onEdit={this.openEditModal}
+                onDelete={this.handleDelete}
+                onComplete={this.handleComplete}
             >
                     <Fragment>
                         <h5 className='task-title'>
@@ -98,7 +96,7 @@ class Task extends Component {
                         <EditTaskModal 
                             ref={ modalRef }
                             task={data}
-                            submit={this.handleEdit}
+                            onSubmit={this.handleEdit}
                         />
                     </Fragment>
                 </TaskContainer>

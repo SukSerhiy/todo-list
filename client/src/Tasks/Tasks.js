@@ -4,12 +4,9 @@ import AddTask from './Task/AddTask'
 import { getTasks } from '../api/Task';
 
 class Tasks extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tasks: []
-        };
-    }
+    state = {
+        tasks: []
+    };
 
     componentDidMount() {
         this.loadData();

@@ -25,7 +25,6 @@ exports.authenticate = (req, res) => {
                     over: 'sdfsdf'
                  });
             } else {
-                console.log('Everything all right');
                 const payload = {
                     admin: user.admin
                 };

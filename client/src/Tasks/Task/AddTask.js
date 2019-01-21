@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
+import PropTypes  from 'prop-types';
 import { Button } from 'element-react';
 import{ EditTask as AddTaskModal} from '../../modals'
 import { insertTask } from '../../api/Task';
 
 class AddTask extends Component {
+    static propTypes = {
+        loadData: PropTypes.func
+    };
+    
     constructor(props) {
         super(props);
         this.modalRef = React.createRef();
-        this.saveTask = this.saveTask.bind(this);
     }
 
-    handleClick (e) {
-        const { modalRef } = this;
-        modalRef && modalRef.current && modalRef.current.openModal();
+    handleClick = (e) => {
+        this.modalRef.current.openModal();
     }
 
-    saveTask (form) {
+    saveTask = (form) => {
         const { loadData } = this.props;
         insertTask(form)
-        .then(() => loadData())
+        .then(() => {
+            loadData && loadData();
+        })
         .catch(error => {
             console.error(error);
         });
@@ -33,11 +38,11 @@ class AddTask extends Component {
             <Button 
                 className='add-task-button'
                 icon='plus' 
-                onClick={this.handleClick.bind(this)} 
+                onClick={this.handleClick} 
             />
             <AddTaskModal 
                 ref={ modalRef }
-                submit={saveTask}
+                onSubmit={saveTask}
             />
         </div>)
     }

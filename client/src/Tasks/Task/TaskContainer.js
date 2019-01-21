@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Controls from './Controls'
 
-class TaskContainer extends Component {
-    
-    render() {
-        const { children, taskId, completed, onEdit, onDelete, onComplete } = this.props;
+const TaskContainer = props => {
+    const { 
+        children, 
+        taskId, 
+        completed, 
+        onEdit, 
+        onDelete, 
+        onComplete 
+    } = props;
         
-        return (
+    return (
         <div 
             className='task-container'
             onDoubleClick={() => onEdit(taskId)}
@@ -22,7 +28,15 @@ class TaskContainer extends Component {
                 completed={completed}
             />
         </div>)
-    }
 }
+
+TaskContainer.propTypes = {
+    children: PropTypes.node,
+    taskId: PropTypes.string,
+    completed: PropTypes.bool,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
+    onComplete: PropTypes.func
+};
 
 export default TaskContainer;

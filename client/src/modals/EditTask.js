@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes  from 'prop-types';
 import { Form, Input, Button } from 'element-react';
 import Modal from 'react-responsive-modal';
 import ValidationFailedError from '../Errors/ValidationFailed'
@@ -28,13 +29,26 @@ const styles = {
 }
 
 class EditTask extends Component {
+    static propTypes = {
+        task: PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            name: PropTypes.string,
+            description: PropTypes.string,
+            endDate: PropTypes.Date,
+            createDate: PropTypes.Date,
+            modifyDate: PropTypes.Date
+        }),
+        loadData: PropTypes.func,
+        onSubmit: PropTypes.func
+    };
+    
     constructor(props) {
         super(props);
         const { task } = props;
         this.state = {
             startDate: new Date(),
             open: false,
-            form: Object.assign({}, formFields, task),
+            form: { ...formFields, ...task },
             rules: {
                 name: [
                     { required: true, message: 'Please input task name', trigger: 'blur' }
@@ -42,29 +56,29 @@ class EditTask extends Component {
             },
         }
         this.formRef = React.createRef();
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     openModal (form) {
         const { task } = this.props;
         this.setState({ 
             open: true, 
-            form: Object.assign({}, formFields, task) 
+            form: { ...formFields, ...task }
         });
     }
     
-    handleClose (e) {
+    handleClose = (e) => {
         this.setState({ 
             open: false, 
-            form: Object.assign({}, formFields) 
+            form: { ...formFields }
         });
     }
 
-    handleSubmit (e) {
-        const { submit } = this.props;
+    handleSubmit = (e) => {
+        const { onSubmit } = this.props;
+        const { form } = this.state;
         this.validateForm()
             .then(() => {
-                submit && submit(Object.assign({}, this.state.form));
+                onSubmit && onSubmit(...form);
                 this.handleClose();
             })
             .catch(error => {
@@ -86,7 +100,7 @@ class EditTask extends Component {
     }
 
     onFieldChange(field, value) {
-        const form = this.state.form;
+        const { form } = this.state;
         form[field] = value;
         this.setState({ form });
     }
@@ -107,7 +121,7 @@ class EditTask extends Component {
             <Modal
                 open={open}
                 styles={styles}
-                onClose={this.handleClose.bind(this)}
+                onClose={this.handleClose}
                 center
             >
                 <Form 

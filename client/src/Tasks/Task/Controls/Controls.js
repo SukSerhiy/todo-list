@@ -4,8 +4,13 @@ import { Checkbox } from 'element-react';
 import Action from './action';
 
 const Controls = props => {
-    const { id, onEdit, onDelete, completed, onComplete } = props;
-    console.log(completed);
+    const { 
+        id, 
+        onEdit, 
+        onDelete, 
+        completed, 
+        onComplete 
+    } = props;
     return (
         <div className='controls'>
             <div className='complete-control'>
@@ -30,10 +35,10 @@ const Controls = props => {
 }
 
 Controls.propTypes = {
-    id: PropTypes.string.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    completed: PropTypes.bool.isRequired
+    id: PropTypes.string,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
+    completed: PropTypes.bool
 }
 
 Controls.defaultProps = {

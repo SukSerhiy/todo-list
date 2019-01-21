@@ -3,20 +3,15 @@ import { getTasks } from '../api/Task';
 import Tasks from './Tasks';
 
 class TasksContainer extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: []
-    };
-
-    this.loadData = this.loadData.bind(this);
-  }
+  state = {
+    tasks: []
+  };
 
   componentDidMount() {
     this.loadData();
   }
 
-  loadData() {
+  loadData = () => {
     getTasks()
       .then(tasks => {
         this.setState({ tasks })

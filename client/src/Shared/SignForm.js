@@ -1,26 +1,24 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input, Button, Loading } from 'element-react';
 
 class SignForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            form: {
-                email: null,
-                password: null
-            },
-            isLoading: false
-        };
-    }
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired
+    };
+    
+    state = {
+        form: {
+            email: null,
+            password: null
+        },
+        isLoading: false
+    };
 
     onFieldChange(field, value) {
-        const form = this.state.form;
+        const { form } = this.state;
         form[field] = value;
         this.setState({ form });
-    }
-
-    handleSubmit() {
-
     }
 
     render() {
@@ -33,7 +31,6 @@ class SignForm extends Component {
             isLoading
          } = this.state;
         const { onSubmit } = this.props;
-
 
         return (<Fragment>
             {isLoading ? <Loading /> : <Form 
