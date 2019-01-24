@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes  from 'prop-types';
 import { Button } from 'element-react';
 import{ EditTask as AddTaskModal} from '../../modals'
 import { insertTask } from '../../api/Task';
 
-class AddTask extends Component {
+class AddTask extends PureComponent {
     static propTypes = {
         loadData: PropTypes.func
     };
@@ -18,15 +18,14 @@ class AddTask extends Component {
         this.modalRef.current.openModal();
     }
 
-    saveTask = (form) => {
+    saveTask = async (form) => {
         const { loadData } = this.props;
-        insertTask(form)
-        .then(() => {
+        try {
+            insertTask(form);
             loadData && loadData();
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     render() {

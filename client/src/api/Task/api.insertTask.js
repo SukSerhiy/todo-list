@@ -5,10 +5,10 @@ const initialTask = {
     completed: false
 }
 
-const insertTask = function(taskData) {
+const insertTask = async (taskData) => {
     const task = Object.assign({}, initialTask, taskData);
     delete task['_id'];
-    return fetch('/api/insertTask', {
+    await fetch('/api/insertTask', {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json'
