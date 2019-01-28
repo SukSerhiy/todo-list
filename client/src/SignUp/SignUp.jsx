@@ -1,23 +1,26 @@
 import React from 'react';
-import SignForm from '../Shared/SignForm';
+import SignUpForm from './SignUpForm';
 import { registrateUser } from '../api/User';
 import './style.css'
 
 const SignUp = props => {
-    const onSubmit = async (email, password) => {
+    const { onSignUp } = props;
+    const onSubmit = async ({username, email, password}) => {
         try {
-            const res = await registrateUser({ email, password });
-            console.log(res);
-            debugger;
+            const res = await registrateUser({ username, email, password });
+            if (res.success) {
+                const { username, email } = res;
+                onSignUp && onSignUp({ username, email });
+            }
         } catch(err) {
-            debugger;
+            console.error(err)
         }
     }
 
     return (
         <div className='auth'>
             <div className='auth-form-container'>
-                <SignForm
+                <SignUpForm
                     onSubmit={ onSubmit }
                 />
             </div>

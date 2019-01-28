@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SignForm from '../Shared/SignForm';
+import LoginForm from './LoginForm';
 import { authenticate } from '../api/User';
 import './style.css'
 
@@ -9,8 +9,9 @@ const Auth = props => {
     const onSubmit = async (email, password) => {
         try {
             const res = await authenticate({ email, password });
-            console.log(res);
-            onLogin && onLogin();
+            const { username, email } = res;
+            debugger;
+            onLogin && onLogin({ username, email });
         } catch(err) {
             console.error(err);
         }
@@ -19,7 +20,7 @@ const Auth = props => {
     return (
         <div className='auth'>
             <div className='auth-form-container'>
-                <SignForm
+                <LoginForm
                     onSubmit={ onSubmit }
                 />
             </div>

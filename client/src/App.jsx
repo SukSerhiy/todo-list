@@ -17,11 +17,17 @@ const routes = [
   {
     path: '/tasks',
     isProtected: true,
-    component: Tasks,
+    component: Tasks
+  },
+  {
+    path: '/login',
+    component: Auth,
+    onLogin: this.handleAuthentication
   },
   {
     path: '/signUp',
     component: SignUp,
+    onSignUp: this.handleAuthentication
   }
 ]
 
@@ -33,7 +39,15 @@ class App extends PureComponent {
     };
   }
 
-  handleAuthentication = () => {
+  componentDidMount() {
+    if (document.cookie.username && document.cookie.email) {
+      this.setState({ isAuthenticated: true });
+    }
+  }
+
+  handleAuthentication = ({ username, email }) => {
+    document.cookie=`username=${username}`;
+    document.cookie=`email=${email}`;
     this.setState({ isAuthenticated: true });
   }
 
@@ -41,7 +55,9 @@ class App extends PureComponent {
     const { isAuthenticated } = this.state;
     return (
       <div className='App'>
-        <Header />
+        <Header
+          isAuthenticated={isAuthenticated} 
+        />
         {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
           <Route 
             key={key}
@@ -49,13 +65,19 @@ class App extends PureComponent {
             exact={exact}
             render={(props) => (
               isProtected && !isAuthenticated ? 
-              <Auth onLogin={this.handleAuthentication} /> :
-              <C {...rest} />
+              <Auth 
+                onLogin={this.handleAuthentication} 
+                {...props} 
+                {...rest} /> :
+              <C 
+                {...props} 
+                {...rest} 
+              />
             )} 
           />))
         }
       </div>
-    )
+    );
   }
 }
 

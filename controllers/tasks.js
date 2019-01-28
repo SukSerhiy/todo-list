@@ -1,7 +1,9 @@
-const Tasks = require('../models/tasks');
+const Tasks = require('../models/tasks'),
+    ObjectId = require('mongodb').ObjectId;
 
 exports.all = (req, res) => {
-    Tasks.all((err, tasks) => {
+    const { userID } = req;
+    Tasks.findByUserID(userID, (err, tasks) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
@@ -22,7 +24,12 @@ exports.findById = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    Tasks.create(req.body, (err, result) => {
+    const { userID } = req;
+    const task = { 
+        ...req.body, 
+        userID: ObjectId(userID) 
+    };
+    Tasks.create(task, (err, result) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);

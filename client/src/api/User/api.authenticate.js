@@ -13,8 +13,7 @@ const authenticate = async (userData) => {
     if (resResult.success === false) {
         throw new Error(resResult.message);
     } else {
-        const { token } = resResult;
-        return { token };
+        return resResult;
     }
 }
 

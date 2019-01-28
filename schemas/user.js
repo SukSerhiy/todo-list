@@ -1,7 +1,11 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 
-const userScheme = new Schema({
+const userSchema = new Schema({
+    username: {
+        type: String,
+        reqiured: true
+    },
     email: {
         type: String,
         required: true
@@ -13,14 +17,12 @@ const userScheme = new Schema({
     salt: {
         type: String,
         required: true
-    },
-    admin: {
-        type: Boolean,
-        default: false
     }
    },
    {
        versionKey: false
    });
 
-   module.exports = userScheme;
+   const User = mongoose.model('User', userSchema)
+
+   module.exports = User;

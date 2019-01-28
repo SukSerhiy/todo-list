@@ -78,7 +78,7 @@ class EditTask extends Component {
         const { form } = this.state;
         this.validateForm()
             .then(() => {
-                onSubmit && onSubmit(...form);
+                onSubmit && onSubmit(form);
                 this.handleClose();
             })
             .catch(error => {

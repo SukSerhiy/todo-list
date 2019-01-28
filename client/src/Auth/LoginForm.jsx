@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Loading } from 'element-react';
 
-class SignForm extends Component {
+class LoginForm extends Component {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired
     };
@@ -62,4 +62,4 @@ class SignForm extends Component {
     }
 }
 
-export default SignForm; 
+export default LoginForm; 

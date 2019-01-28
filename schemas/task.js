@@ -1,7 +1,7 @@
-const mongoose = require("mongoose"),
+const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
-const taskScheme = new Schema({
+const taskSchema = new Schema({
       name: {
         type: String,
         required: true
@@ -19,10 +19,17 @@ const taskScheme = new Schema({
       modifyDate: {
         type: Date,
         default: new Date()
+      },
+      userID: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
       }
    },
    {
      versionKey: false
    });
 
-   module.exports = taskScheme;
+   const Task = mongoose.model('Task', taskSchema)
+
+   module.exports = Task;

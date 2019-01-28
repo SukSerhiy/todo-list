@@ -6,7 +6,7 @@ const Users = require('../models/users'),
 
 exports.authenticate = (req, res) => {
     const { email, password } = req.body;
-    Users.findByEmail({ email }, (err, user) => {
+    Users.findByEmail(email, (err, user) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
@@ -21,23 +21,24 @@ exports.authenticate = (req, res) => {
                 console.log('Authentication failed. Wrong password.')
                 res.json({ 
                     success: false, 
-                    message: 'Authentication failed. Wrong password.',
-                    over: 'sdfsdf'
+                    message: 'Authentication failed. Wrong password.'
                  });
             } else {
                 const payload = {
-                    admin: user.admin
+                    userID: user['_id']
                 };
 
                 const token = jwt.sign(payload, app.get('superSecret'), {
                     expiresIn : 60 * 60 * 24
                 });
 
-                res.setHeader('Set-Cookie', 'name=Serhii');
+                res.cookie('token', token, { httpOnly: true });
+                const { username, email } = user;
 
                 res.json({
                     success: true,
-                    token: token
+                    username,
+                    email
                 });
             }
         }
@@ -45,14 +46,29 @@ exports.authenticate = (req, res) => {
 }
 
 exports.registrate = (req, res) => {
-    const { email, password } = req.body;
-    
+    const { username, email, password } = req.body;
     const { passwordHash, salt } = saltHashPassword(password);
-    Users.create({email, passwordHash, salt}, (err, result) => {
+    Users.findByEmail(email, (err, result) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
         }
-        return res.sendStatus(200);
+        if (result) {
+            return res.json({
+                succcess: false,
+                message: 'User with this email already exists'
+            });
+        }
+        Users.create({username, email, passwordHash, salt}, (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.sendStatus(500);
+            }
+            return res.json({
+                succcess: true,
+                username,
+                email
+            });
+        });
     });
 }

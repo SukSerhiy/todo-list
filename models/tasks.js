@@ -1,10 +1,9 @@
 const mongoose = require('mongoose'),
-    taskScheme = require('../schemas/task'),
-    Task = mongoose.model('Task', taskScheme),
+    Task = require('../schemas/task'),
     ObjectId = require('mongodb').ObjectId;
 
-exports.all = (cb) => {
-    Task.find({}, cb);
+exports.findByUserID = (userID, cb) => {
+    Task.find({ userID: ObjectId(userID) }, cb);
 }
 
 exports.findById = (id, cb) => {
@@ -16,7 +15,7 @@ exports.create = (data, cb) => {
 }
 
 exports.update = (id, params, cb) => {
-    Object.assign(params, {modifyDate: new Date()});
+    Object.assign(params, { modifyDate: new Date() });
     Task.updateOne(
         { _id: ObjectId(id) },
         params,

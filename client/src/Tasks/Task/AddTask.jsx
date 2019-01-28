@@ -20,6 +20,7 @@ class AddTask extends PureComponent {
 
     saveTask = async (form) => {
         const { loadData } = this.props;
+        delete form['_id'];
         try {
             insertTask(form);
             loadData && loadData();
