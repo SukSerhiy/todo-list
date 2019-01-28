@@ -6,9 +6,10 @@ import Home from './Home';
 import Auth from './Auth';
 import SignUp from './SignUp';
 import Tasks from './Tasks';
+import { setCookie, getCookie, deleteCookie } from './utils/cookieHelper'
 import './App.css';
 
-const routes = [
+const publicRoutes = [
   {
     path: '/',
     exact: true,
@@ -18,7 +19,10 @@ const routes = [
     path: '/tasks',
     isProtected: true,
     component: Tasks
-  },
+  }
+];
+
+const nonAuthRoutes = [
   {
     path: '/login',
     component: Auth,
@@ -40,22 +44,44 @@ class App extends PureComponent {
   }
 
   componentDidMount() {
-    if (document.cookie.username && document.cookie.email) {
+    const username = getCookie('username');
+    const email = getCookie('email');
+    if (username && email) {
       this.setState({ isAuthenticated: true });
     }
   }
 
   handleAuthentication = ({ username, email }) => {
-    document.cookie=`username=${username}`;
-    document.cookie=`email=${email}`;
+    setCookie('username', username);
+    setCookie('email', email);
     this.setState({ isAuthenticated: true });
+  }
+
+  doLogin() {
+    const { protocol, host } = window.location;
+    const href = `${protocol}//${host}/login`;
+    window.location.href = href;
+  }
+
+  doLogout = () => {
+    deleteCookie('username');
+    deleteCookie('email');
+    this.setState({ isAuthenticated: false });
   }
 
   render() {
     const { isAuthenticated } = this.state;
+    const routes = isAuthenticated ? [
+      ...publicRoutes
+    ] : [
+      ...publicRoutes,
+      ...nonAuthRoutes
+    ];
     return (
       <div className='App'>
         <Header
+          doLogin={this.doLogin}
+          doLogout={this.doLogout}
           isAuthenticated={isAuthenticated} 
         />
         {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (

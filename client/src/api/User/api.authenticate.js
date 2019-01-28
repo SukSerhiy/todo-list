@@ -1,5 +1,6 @@
 const authenticate = async (userData) => {
     const { email, password } = userData
+    console.log('email = ', email)
     const res = await fetch('/api/authenticate', {
         method: 'POST',
         headers: new Headers({

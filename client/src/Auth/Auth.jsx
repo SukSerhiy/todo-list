@@ -9,9 +9,11 @@ const Auth = props => {
     const onSubmit = async (email, password) => {
         try {
             const res = await authenticate({ email, password });
-            const { username, email } = res;
-            debugger;
-            onLogin && onLogin({ username, email });
+            {
+                const { username, email } = res;
+                onLogin && onLogin({ username, email });
+            }
+            
         } catch(err) {
             console.error(err);
         }

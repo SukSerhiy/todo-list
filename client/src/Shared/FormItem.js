@@ -2,8 +2,6 @@ import React from 'react';
 import Form from 'element-react';
 
 const formItem = function(Controll, fieldName, props) {
-    console.log(this);
-    debugger;
     const { form : { value } } = this.state;
     return (
         <Form.Item
