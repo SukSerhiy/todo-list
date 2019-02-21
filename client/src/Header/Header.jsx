@@ -2,20 +2,15 @@ import React from 'react';
 import Title from './Title'
 import UserInfo from './UserInfo';
 import { Layout } from 'element-react';
-import { TODO_LIST } from '../constants/en'
 import './style.css';
 
 const Header = props => {
-    return (
-        <Layout.Row className='header'>
-            <Layout.Col span='20'>
-                <Title name={TODO_LIST} />
-            </Layout.Col>
-            <Layout.Col span='4'>
-                <UserInfo {...props} />
-            </Layout.Col>
-        </Layout.Row>
-    )
+  const { name } = props;
+  return (
+    <header>
+      <h2 className='title'>{name}</h2>
+    </header>
+  )
 }
 
 export default Header;

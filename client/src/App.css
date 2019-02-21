@@ -1,12 +1,5 @@
-@font-face {
-    font-family: Roboto;
-    src: url(./fonts/Roboto-Black.ttf),
-        url(./fonts/Roboto-Bold.ttf),
-        url(./fonts/Roboto-Medium.ttf),
-        url(./fonts/Roboto-Regular.ttf);
-}
-
-html, body {
-    font-family: Roboto;
-    height: 100%;
+main {
+  height: calc(100% - 82px);
+  background-color: #fffdd0;
+  padding: 82px 1.5% 0;
 }

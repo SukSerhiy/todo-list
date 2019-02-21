@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.auth h3 {
+  font-size: 1.8em;
+  font-weight: normal;
+}
+
 .auth > .auth-form-container {
     margin-top: 10px;
     display: inline-block;
@@ -9,4 +14,10 @@
 
 .auth > .auth-form-container > .auth-form {
     text-align: left;
+}
+
+.auth > .auth-form-container > .auth-form button {
+  width: 100%;
+  background-color: #13ce66;
+  border-color: #13ce66;
 }
