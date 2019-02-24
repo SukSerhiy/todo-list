@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import { authenticate } from '../api/User';
+import { ErrorAlert } from '../Alerts';
 import './style.css'
 
 const Auth = props => {
@@ -13,9 +14,9 @@ const Auth = props => {
         const { username, email } = res;
         onLogin && onLogin({ username, email });
       }
-
     } catch (err) {
       console.error(err);
+      ErrorAlert(err.message);
     }
   }
 

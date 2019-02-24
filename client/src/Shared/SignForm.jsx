@@ -3,63 +3,63 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button, Loading } from 'element-react';
 
 class SignForm extends Component {
-    static propTypes = {
-        onSubmit: PropTypes.func.isRequired
-    };
-    
-    state = {
-        form: {
-            email: null,
-            password: null
-        },
-        isLoading: false
-    };
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired
+  };
 
-    onFieldChange(field, value) {
-        const { form } = this.state;
-        form[field] = value;
-        this.setState({ form });
-    }
+  state = {
+    form: {
+      email: null,
+      password: null
+    },
+    isLoading: false
+  };
 
-    render() {
-        const { 
-            form,
-            form: {
-                email,
-                password
-            },
-            isLoading,
-         } = this.state;
-        const { onSubmit } = this.props;
+  onFieldChange(field, value) {
+    const { form } = this.state;
+    form[field] = value;
+    this.setState({ form });
+  }
 
-        return (<Fragment>
-            {isLoading ? <Loading /> : <Form 
-                className='auth-form'
-                form={form}
-            >
-                <Form.Item>
-                    <Input 
-                        placeholder='Enter your email'
-                        value={email}
-                        onChange={v => this.onFieldChange('email', v)}
-                    />
-                </Form.Item>
+  render() {
+    const {
+      form,
+      form: { email, password },
+      isLoading
+    } = this.state;
+    const { onSubmit } = this.props;
 
-                <Form.Item>
-                    <Input 
-                        placeholder='Enter the password'
-                        value={password}
-                        onChange={v => this.onFieldChange('password', v)}
-                    />
-                </Form.Item>
+    return (
+      <Fragment>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Form 
+            className='auth-form' 
+            form={form}
+          >
+            <Form.Item>
+              <Input
+                placeholder='Enter your email'
+                value={email}
+                onChange={v => this.onFieldChange('email', v)}
+              />
+            </Form.Item>
 
-                <Button onClick={() => onSubmit(email, password)}>
-                    Sign in
-                </Button>
-            </Form>}
-        </Fragment>
-        )
-    }
+            <Form.Item>
+              <Input
+                placeholder='Enter the password'
+                value={password}
+                onChange={v => this.onFieldChange('password', v)}
+              />
+            </Form.Item>
+
+            <Button onClick={() => onSubmit(email, password)}>Sign in</Button>
+          </Form>
+        )}
+      </Fragment>
+    );
+  }
 }
 
-export default SignForm; 
+export default SignForm;

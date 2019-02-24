@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'element-react';
-import { EditTask as AddTaskModal } from '../../modals'
-import { insertTask } from '../../api/Task';
+import { TaskModal as AddTaskModal } from '../modals'
+import { insertTask } from '../api/Task';
 
 class AddTask extends PureComponent {
   static propTypes = {
@@ -15,7 +15,7 @@ class AddTask extends PureComponent {
   }
 
   handleClick = (e) => {
-    this.modalRef.current.openModal();
+    this.modalRef.current.open();
   }
 
   saveTask = async (form) => {
@@ -34,7 +34,7 @@ class AddTask extends PureComponent {
       saveTask,
       modalRef,
     } = this;
-    return (<div>
+    return (<Fragment>
       <Button
         className='add-task-button'
         icon='plus'
@@ -44,7 +44,7 @@ class AddTask extends PureComponent {
         ref={modalRef}
         onSubmit={saveTask}
       />
-    </div>)
+    </Fragment>)
   }
 }
 

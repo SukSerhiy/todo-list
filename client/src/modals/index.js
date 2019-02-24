@@ -1,3 +1,3 @@
-import EditTask from './EditTask';
+import TaskModal from './TaskModal';
 
-export { EditTask }
+export { TaskModal }

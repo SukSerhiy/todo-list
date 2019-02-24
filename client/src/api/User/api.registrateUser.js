@@ -1,3 +1,5 @@
+import responseMiddleware from '../responseMiddleware';
+
 const registrateUser = async (userData) => {
     const res = await fetch('/api/registrateUser', {
         method: 'POST',
@@ -6,6 +8,8 @@ const registrateUser = async (userData) => {
         }),
         body: JSON.stringify(userData)
     });
+
+    responseMiddleware(res);
 
     const resResult = res.json();
 

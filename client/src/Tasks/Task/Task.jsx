@@ -1,105 +1,46 @@
-import React, {Component, Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import TaskContainer from './TaskContainer';
-import { EditTask as EditTaskModal } from '../../modals'
-import { editTask, deleteTask, completeTask } from '../../api/Task';
-
 import './style.css';
 
-class Task extends Component {
-    static propTypes = {
-        data: PropTypes.shape({
-            name: PropTypes.string,
-            description: PropTypes.string,
-        }),
-        createdDate: PropTypes.instanceOf(Date),
-        modifyDate: PropTypes.instanceOf(Date),
-    };
+const Task = props => {
+  const openEditModal = () => {
+    const { data, openEditModal } = props;
+    openEditModal(data);
+  };
 
-    static defaultProps = {
-        data: []
-    }
+  const deleteTask = () => {
+    const {
+      data: { _id },
+      deleteTask
+    } = props;
 
-    constructor(props) {
-        super(props);
-        this.modalRef = React.createRef();
-    }
+    deleteTask(_id);
+  };
 
-    openEditModal = () => {
-        const { modalRef } = this;
-        modalRef && modalRef.current && modalRef.current.openModal();
-    }
+  const {
+    data: { name, description }
+  } = props;
 
-    handleEdit = async (task) => {
-        const { loadData } = this.props;
-        const id = task['_id'];
-        delete task['_id'];
-        try {
-            await editTask(id, task);
-            loadData();
-        } catch(err) {
-            console.error(err);
-        }
-    }
+  return (
+    <div className='task'>
+      <div className='icons'>
+        <div className='edit' onClick={openEditModal} />
+        <div className='delete' onClick={deleteTask} />
+      </div>
+      <h4>{name}</h4>
+      <span>{description}</span>
+    </div>
+  );
+};
 
-    handleDelete = async (id) => {
-        const { loadData } = this.props;
-        try {
-            await deleteTask(id);
-            loadData && loadData();
-        } catch(err) {
-            console.error(err);
-        }
-    }
-
-    handleComplete = (id) => {
-        const { loadData } = this.props;
-        completeTask(id)
-        .then(() => {
-            loadData && loadData();
-        })
-        .catch(err => {
-            console.error(err);
-        });
-    }
-
-    render() {
-        const { modalRef } = this;
-        const { data,
-            data: {
-            _id, name, description, endDate, completed
-        } } = this.props;
-
-        return (
-            <TaskContainer 
-                taskId={_id}
-                completed={completed}
-                onEdit={this.openEditModal}
-                onDelete={this.handleDelete}
-                onComplete={this.handleComplete}
-            >
-                    <Fragment>
-                        <h5 className='task-title'>
-                            {name}
-                        </h5>
-
-                        <div className='task-description'>
-                            {description}
-                        </div>
-
-                        <div className='task-date'>
-                            {endDate}
-                        </div>
-
-                        <EditTaskModal 
-                            ref={ modalRef }
-                            task={data}
-                            onSubmit={this.handleEdit}
-                        />
-                    </Fragment>
-                </TaskContainer>
-        )
-    }
-}
+Task.propTypes = {
+  data: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    userID: PropTypes.string,
+    completed: PropTypes.bool
+  })
+};
 
 export default Task;

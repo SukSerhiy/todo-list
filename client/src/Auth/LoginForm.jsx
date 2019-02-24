@@ -66,6 +66,7 @@ class LoginForm extends Component {
             placeholder='Enter the password'
             value={password}
             onChange={v => this.onFieldChange('password', v)}
+            type='password'
           />
         </Form.Item>
 

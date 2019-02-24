@@ -5,16 +5,23 @@
   "dependencies": {
     "element-react": "^1.4.24",
     "element-theme-default": "^1.4.13",
+    "eslint": "^5.14.1",
+    "immutable": "^4.0.0-rc.12",
     "inputmask": "^4.0.5",
     "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
     "react": "^16.2.0",
-    "react-datepicker": "^2.0.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^6.0.1",
     "react-responsive-modal": "^3.5.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.0.17"
+    "react-s-alert": "^1.4.1",
+    "react-scripts": "1.0.17",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

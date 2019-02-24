@@ -1,6 +1,6 @@
 const getCookie = (name) => {
     const matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        "(?:^|; )" + name.replace(/([.$?*|{}()[]\\\/\+^])/g, '\\$1') + "=([^;]*)"
       )
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
@@ -11,7 +11,7 @@ const setCookie = (name, value, options) => {
 
   let expires = options.expires;
 
-  if (typeof expires == "number" && expires) {
+  if (typeof expires === "number" && expires) {
     const d = new Date();
     d.setTime(d.getTime() + expires * 1000);
     expires = options.expires = d;

@@ -17,7 +17,7 @@ exports.authenticate = (req, res) => {
         } else {
             const { passwordHash, salt } = user;
             const enteredPassHash = sha512(password, salt);
-            if (user.passwordHash !== enteredPassHash) {
+            if (passwordHash !== enteredPassHash) {
                 console.log('Authentication failed. Wrong password.')
                 res.json({ 
                     success: false, 

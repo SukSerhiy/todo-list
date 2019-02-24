@@ -1,6 +1,7 @@
+import responseMiddleware from '../responseMiddleware';
+
 const authenticate = async (userData) => {
     const { email, password } = userData
-    console.log('email = ', email)
     const res = await fetch('/api/authenticate', {
         method: 'POST',
         headers: new Headers({
@@ -9,7 +10,9 @@ const authenticate = async (userData) => {
         body: JSON.stringify({ email, password })
     });
 
-    const resResult = res.json();
+    responseMiddleware(res);
+
+    const resResult = await res.json();
 
     if (resResult.success === false) {
         throw new Error(resResult.message);
