@@ -5,7 +5,7 @@ exports.all = (req, res) => {
   const { userID, skip, limit } = req;
   Tasks.findByUserID(userID, { skip, limit }, (err, tasks) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     }
     res.send(tasks);
@@ -16,7 +16,7 @@ exports.findById = (req, res) => {
   const { id } = req.query;
   Tasks.findById(id, (err, task) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     }
     res.send(task);
@@ -29,9 +29,9 @@ exports.create = (req, res) => {
     ...req.body,
     userID: ObjectId(userID)
   };
-  Tasks.create(task, (err, result) => {
+  Tasks.create(task, err => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     }
     return res.sendStatus(200);
@@ -39,10 +39,10 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const { id, params } = req.body;
-  Tasks.update(id, params, (err, result) => {
+  const { id, task } = req.body;
+  Tasks.update(id, task, err => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     }
     return res.sendStatus(200);
@@ -51,9 +51,9 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const { id } = req.body;
-  Tasks.delete(id, (err, result) => {
+  Tasks.delete(id, err => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     }
     return res.sendStatus(200);

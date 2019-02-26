@@ -1,7 +1,9 @@
-export default (state = [], action) => {
+import { List } from 'immutable';
+
+export default (state = List([]), action) => {
   switch (action.type) {
     case 'SET_TASKS':
-      return action.payload;
+      return List(action.payload);
     default:
       return state;
   }

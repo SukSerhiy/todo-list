@@ -3,7 +3,6 @@ import responseMiddleware from '../responseMiddleware';
 const initialTask = {
     name: null,
     description: null,
-    endTask: null,
     completed: false
 }
 

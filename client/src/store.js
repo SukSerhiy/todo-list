@@ -6,9 +6,7 @@ import Immutable from 'immutable';
 
 const initState = Immutable.fromJS({
   tasks: [],
-  isAuthorized: false,
-  username: null,
-  email: null
+  user: null
 });
 
 export default function configureStore(initialState = initState) {

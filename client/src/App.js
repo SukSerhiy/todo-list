@@ -1,12 +1,14 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import 'element-theme-default';
 import { Route } from 'react-router-dom';
 import { Header } from './Header'
 import Home from './Home';
-import Auth from './Auth';
+import AuthContainer from './Auth';
 import SignUp from './SignUp';
-import Tasks from './Tasks';
-import { setCookie, getCookie, deleteCookie } from './utils/cookieHelper'
+import TaskContainer from './Tasks';
+import { getCookie } from './utils/cookieHelper'
+import { setUser } from './actions/user';
 import SAlert from './SAlert';
 import './App.css';
 
@@ -19,60 +21,34 @@ const publicRoutes = [
   {
     path: '/tasks',
     isProtected: true,
-    component: Tasks
+    component: TaskContainer
   }
 ];
 
 const nonAuthRoutes = [
   {
     path: '/login',
-    component: Auth,
-    onLogin: this.handleAuthentication
+    component: AuthContainer,
   },
   {
     path: '/signUp',
     component: SignUp,
-    onSignUp: this.handleAuthentication
   }
 ];
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuthenticated: false
-    };
-  }
-
   componentDidMount() {
+    const { setUser } = this.props;
     const username = getCookie('username');
     const email = getCookie('email');
     if (username && email) {
-      this.setState({ isAuthenticated: true });
+      setUser({ username, email });
     }
   }
 
-  handleAuthentication = ({ username, email }) => {
-    setCookie('username', username);
-    setCookie('email', email);
-    this.setState({ isAuthenticated: true });
-  }
-
-  doLogin() {
-    const { protocol, host } = window.location;
-    const href = `${protocol}//${host}/login`;
-    window.location.href = href;
-  }
-
-  doLogout = () => {
-    deleteCookie('username');
-    deleteCookie('email');
-    this.setState({ isAuthenticated: false });
-  }
-
   render() {
-    const { isAuthenticated } = this.state;
-    const routes = isAuthenticated ? [
+    const { user } = this.props;
+    const routes = this.props.user ? [
       ...publicRoutes
     ] : [
       ...publicRoutes,
@@ -82,9 +58,6 @@ class App extends PureComponent {
       <Fragment>
         <Header
           name='TODO-list'
-          doLogin={this.doLogin}
-          doLogout={this.doLogout}
-          isAuthenticated={isAuthenticated} 
         />
         <main>
         {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
@@ -93,9 +66,8 @@ class App extends PureComponent {
             path={path} 
             exact={exact}
             render={(props) => (
-              isProtected && !isAuthenticated ? 
-              <Auth 
-                onLogin={this.handleAuthentication} 
+              isProtected && !user ? 
+              <AuthContainer 
                 {...props} 
                 {...rest} /> :
               <C 
@@ -112,4 +84,13 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  const { user } = state.toJS();
+  return { user };
+};
+
+const mapDispatchToProps = dispatch => ({
+  setUser: payload => dispatch(setUser(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

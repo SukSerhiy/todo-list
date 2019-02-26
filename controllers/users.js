@@ -8,17 +8,17 @@ exports.authenticate = (req, res) => {
     const { email, password } = req.body;
     Users.findByEmail(email, (err, user) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             return res.sendStatus(500);
         }
         if (!user) {
-            console.log('Authentication failed. User not found.');
+            console.error('Authentication failed. User not found.');
             res.json({ success: false, message: 'Authentication failed. User not found.' });
         } else {
             const { passwordHash, salt } = user;
             const enteredPassHash = sha512(password, salt);
             if (passwordHash !== enteredPassHash) {
-                console.log('Authentication failed. Wrong password.')
+                console.error('Authentication failed. Wrong password.')
                 res.json({ 
                     success: false, 
                     message: 'Authentication failed. Wrong password.'
@@ -50,7 +50,7 @@ exports.registrate = (req, res) => {
     const { passwordHash, salt } = saltHashPassword(password);
     Users.findByEmail(email, (err, result) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             return res.sendStatus(500);
         }
         if (result) {
@@ -61,7 +61,7 @@ exports.registrate = (req, res) => {
         }
         Users.create({username, email, passwordHash, salt}, (err, result) => {
             if (err) {
-                console.log(err);
+                console.error(err);
                 return res.sendStatus(500);
             }
             return res.json({

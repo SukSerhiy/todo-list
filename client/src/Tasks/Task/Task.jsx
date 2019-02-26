@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 const Task = props => {
+  
   const openEditModal = () => {
     const { data, openEditModal } = props;
     openEditModal(data);

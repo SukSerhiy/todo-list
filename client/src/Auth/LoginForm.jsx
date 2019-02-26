@@ -5,7 +5,8 @@ import { FIELD_IS_REQUIRED, ENTER_VALID_EMAIL } from '../constants/en';
 
 class LoginForm extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    className: PropTypes.string
   };
 
   state = {

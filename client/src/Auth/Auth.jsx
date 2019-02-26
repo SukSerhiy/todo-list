@@ -6,19 +6,8 @@ import { ErrorAlert } from '../Alerts';
 import './style.css'
 
 const Auth = props => {
-  const { onLogin } = props;
-  const onSubmit = async (email, password) => {
-    try {
-      const res = await authenticate({ email, password });
-      {
-        const { username, email } = res;
-        onLogin && onLogin({ username, email });
-      }
-    } catch (err) {
-      console.error(err);
-      ErrorAlert(err.message);
-    }
-  }
+
+  const { onSubmit } = props;
 
   return (
     <div className='auth'>
@@ -34,7 +23,7 @@ const Auth = props => {
 }
 
 Auth.propTypes = {
-  onLogin: PropTypes.func
+  onSubmit: PropTypes.func
 };
 
 export default Auth;
