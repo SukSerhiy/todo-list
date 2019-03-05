@@ -78,13 +78,13 @@ class SignUpForm extends Component {
         });
     }
 
-    onSubmit = (userData) => {
+    onSubmit = () => {
         const { onSubmit } = this.props;
         const { form: {
             username, email, password
         } } = this.state;
         try {
-            //this.validate() 
+            this.validate() 
             onSubmit({ username, email, password })
         } catch(err) {
             console.error(err);
@@ -103,7 +103,6 @@ class SignUpForm extends Component {
             rules,
             isLoading,
          } = this.state;
-        const { onSubmit } = this;
 
         return (<Fragment>
             {isLoading ? <Loading /> : <Form 

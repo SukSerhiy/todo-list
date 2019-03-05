@@ -1,7 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
-import 'element-theme-default';
+import { Router } from 'react-router';
 import { Route } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import { Header } from './Header'
 import Home from './Home';
 import AuthContainer from './Auth';
@@ -11,6 +12,8 @@ import { getCookie } from './utils/cookieHelper'
 import { setUser } from './actions/user';
 import SAlert from './SAlert';
 import './App.css';
+
+const history = createHistory();
 
 const publicRoutes = [
   {
@@ -60,23 +63,26 @@ class App extends PureComponent {
           name='TODO-list'
         />
         <main>
-        {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
-          <Route 
-            key={key}
-            path={path} 
-            exact={exact}
-            render={(props) => (
-              isProtected && !user ? 
-              <AuthContainer 
-                {...props} 
-                {...rest} /> :
-              <C 
-                {...props} 
-                {...rest} 
-              />
-            )} 
-          />))
-        }
+          <Router history={history}>
+            <Fragment>
+              {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
+                <Route 
+                  key={key}
+                  path={path} 
+                  exact={exact}
+                  render={(props) => (
+                    isProtected && !user ? 
+                    (<AuthContainer 
+                      {...props} 
+                    {...rest} />) :
+                    (<C 
+                      {...props} 
+                      {...rest} 
+                    />)
+                  )} 
+                />))}
+              </Fragment>
+          </Router>
         </main>
         <SAlert />
       </Fragment>

@@ -19,13 +19,7 @@ const TaskList = props => {
 }
 
 TaskList.propTypes = {
-  tasks: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    userID: PropTypes.string,
-    completed: PropTypes.bool
-  }),
+  tasks: PropTypes.array,
   openEditModal: PropTypes.func,
   deleteTask: PropTypes.func
 }

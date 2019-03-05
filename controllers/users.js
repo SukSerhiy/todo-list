@@ -55,7 +55,7 @@ exports.registrate = (req, res) => {
         }
         if (result) {
             return res.json({
-                succcess: false,
+                success: false,
                 message: 'User with this email already exists'
             });
         }
@@ -65,7 +65,7 @@ exports.registrate = (req, res) => {
                 return res.sendStatus(500);
             }
             return res.json({
-                succcess: true,
+                success: true,
                 username,
                 email
             });
