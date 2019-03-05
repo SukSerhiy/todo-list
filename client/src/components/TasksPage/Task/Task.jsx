@@ -41,7 +41,9 @@ Task.propTypes = {
     description: PropTypes.string,
     userID: PropTypes.string,
     completed: PropTypes.bool
-  })
+  }).isRequired,
+  openEditModal: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired
 };
 
 export default Task;

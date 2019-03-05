@@ -3,41 +3,17 @@ import { connect } from 'react-redux';
 import { Router } from 'react-router';
 import { Route } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
-import { Header } from './Header'
-import Home from './Home';
-import AuthContainer from './Auth';
-import SignUp from './SignUp';
-import TaskContainer from './Tasks';
+import { Header } from './components/Header';
+import AuthContainer from './containers/AuthContainer';
+import SignUpContainer from './containers/SignUpContainer';
+import TaskContainer from './containers/TaskContainer';
+import HomePage from './components/HomePage';
 import { getCookie } from './utils/cookieHelper'
 import { setUser } from './actions/user';
 import SAlert from './SAlert';
 import './App.css';
 
 const history = createHistory();
-
-const publicRoutes = [
-  {
-    path: '/',
-    exact: true,
-    component: Home
-  },
-  {
-    path: '/tasks',
-    isProtected: true,
-    component: TaskContainer
-  }
-];
-
-const nonAuthRoutes = [
-  {
-    path: '/login',
-    component: AuthContainer,
-  },
-  {
-    path: '/signUp',
-    component: SignUp,
-  }
-];
 
 class App extends PureComponent {
   componentDidMount() {
@@ -51,12 +27,6 @@ class App extends PureComponent {
 
   render() {
     const { user } = this.props;
-    const routes = this.props.user ? [
-      ...publicRoutes
-    ] : [
-      ...publicRoutes,
-      ...nonAuthRoutes
-    ];
     return (
       <Fragment>
         <Header
@@ -65,23 +35,13 @@ class App extends PureComponent {
         <main>
           <Router history={history}>
             <Fragment>
-              {routes.map(({ path, component: C, exact, isProtected, ...rest}, key) => (
-                <Route 
-                  key={key}
-                  path={path} 
-                  exact={exact}
-                  render={(props) => (
-                    isProtected && !user ? 
-                    (<AuthContainer 
-                      {...props} 
-                    {...rest} />) :
-                    (<C 
-                      {...props} 
-                      {...rest} 
-                    />)
-                  )} 
-                />))}
-              </Fragment>
+              <Route path='/' exact render={(props) => (<HomePage {...props}  />)} />
+              <Route path='/login' exact render={(props) => (<AuthContainer {...props}  />)} />
+              {user ? 
+                (<Route path='/tasks' exact render={(props) => (<TaskContainer {...props}  />)} />)
+              : (<Route path='/tasks' exact render={(props) => (<AuthContainer {...props} />)} />)}
+              {!user && (<Route path='/signUp' exact render={(props) => (<SignUpContainer {...props}  />)} />)}
+            </Fragment>
           </Router>
         </main>
         <SAlert />

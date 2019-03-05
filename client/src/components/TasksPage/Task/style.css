@@ -26,13 +26,13 @@
 .task > .icons > .edit {
   height: 14px;
   width: 14px;
-  background-image: url(../../img/edit.svg);
+  background-image: url(../../../img/edit.svg);
   background-size: 100%;
 }
 
 .task > .icons > .delete {
   height: 14px;
   width: 14px;
-  background-image: url(../../img/delete.png);
+  background-image: url(../../../img/delete.png);
   background-size: 207%;
 }

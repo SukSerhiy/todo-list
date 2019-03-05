@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Loading } from 'element-react';
-import { FIELD_IS_REQUIRED, ENTER_VALID_EMAIL } from '../constants/en';
+import { FIELD_IS_REQUIRED, ENTER_VALID_EMAIL } from '../../constants/en';
 
 class LoginForm extends Component {
   static propTypes = {

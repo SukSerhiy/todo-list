@@ -12,13 +12,11 @@ exports.authenticate = (req, res) => {
             return res.sendStatus(500);
         }
         if (!user) {
-            console.error('Authentication failed. User not found.');
             res.json({ success: false, message: 'Authentication failed. User not found.' });
         } else {
             const { passwordHash, salt } = user;
             const enteredPassHash = sha512(password, salt);
             if (passwordHash !== enteredPassHash) {
-                console.error('Authentication failed. Wrong password.')
                 res.json({ 
                     success: false, 
                     message: 'Authentication failed. Wrong password.'

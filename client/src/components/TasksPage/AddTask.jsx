@@ -1,11 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'element-react';
-import { TaskModal } from '../modals'
+import { TaskModal } from '../../components/modals'
 
 class AddTask extends PureComponent {
   static propTypes = {
-    loadData: PropTypes.func
+    onSubmit: PropTypes.func.isRequired
   };
 
   constructor(props) {

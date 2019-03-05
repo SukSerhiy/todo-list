@@ -1,29 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
-import { authenticate } from '../api/User';
-import { ErrorAlert } from '../Alerts';
-import './style.css'
+import './style.css';
 
-const Auth = props => {
-
-  const { onSubmit } = props;
-
+const AuthPage = props => {
+  const { doLogIn } = props;
   return (
     <div className='auth'>
       <h3>Sign in</h3>
       <div className='auth-form-container'>
         <LoginForm
           className='auth-form'
-          onSubmit={onSubmit}
+          onSubmit={doLogIn}
         />
-      </div>
     </div>
-  );
+  </div>)
 }
 
-Auth.propTypes = {
-  onSubmit: PropTypes.func
+AuthPage.propTypes = {
+  doLogIn: PropTypes.func.isRequired
 };
 
-export default Auth;
+export default AuthPage;

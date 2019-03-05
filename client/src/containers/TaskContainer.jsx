@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import TasksPage from './TasksPage';
+import TasksPage from '../components/TasksPage';
 import { insertTask, getTasks, editTask, deleteTask } from '../api/Task';
 import { setTasks } from '../actions/tasks';
 

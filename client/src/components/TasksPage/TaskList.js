@@ -18,10 +18,14 @@ const TaskList = props => {
   )
 }
 
+TaskList.defaultProps = {
+  tasks: []
+}
+
 TaskList.propTypes = {
   tasks: PropTypes.array,
-  openEditModal: PropTypes.func,
-  deleteTask: PropTypes.func
+  openEditModal: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired
 }
 
 export default TaskList;

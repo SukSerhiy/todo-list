@@ -11,7 +11,7 @@ const registrateUser = async (userData) => {
 
     responseMiddleware(res);
 
-    const resResult = res.json();
+    const resResult = await res.json();
 
     if (resResult.success === false) {
         throw new Error(resResult.message);

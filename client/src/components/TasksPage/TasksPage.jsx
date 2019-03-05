@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 import AddTask from './AddTask';
 import TaskList from './TaskList';
 import { TaskModal as EditTaskModal } from '../modals';
-import { ADD_TASK } from '../constants/en';
+import { ADD_TASK } from '../../constants/en';
 import './style.css';
 
 class TasksPage extends Component {
   static propTypes = {
-    tasks: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      description: PropTypes.string,
-      userID: PropTypes.string,
-      completed: PropTypes.bool
-    })),
-    addTask: PropTypes.func,
-    editTask: PropTypes.func,
-    deleteTask: PropTypes.func
+    tasks: PropTypes.array,
+    addTask: PropTypes.func.isRequired,
+    editTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired
   }
+
+  static defaultProps = {
+    tasks: []
+  };
 
   constructor(props) {
     super(props);

@@ -1,3 +1,24 @@
-import ErrorAlert from './ErrorAlert';
+import Alert from 'react-s-alert';
 
-export { ErrorAlert }
+/**
+ * Timeout in mlliseconds
+ */
+const TIMEOUT = 2000;
+
+const SuccessAlert =  (message) => (
+  Alert.error(message, {
+    position: 'bottom',
+    effect: 'slide',
+    timeout: TIMEOUT
+  })
+);
+
+const ErrorAlert =  (message) => (
+  Alert.success(message, {
+    position: 'bottom',
+    effect: 'slide',
+    timeout: TIMEOUT
+  })
+);
+
+export { SuccessAlert, ErrorAlert }

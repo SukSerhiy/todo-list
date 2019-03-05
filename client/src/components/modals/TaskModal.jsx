@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'element-react';
 import Modal from 'react-responsive-modal';
-import ValidationFailedError from '../Errors/ValidationFailed';
+import ValidationFailedError from '../../Errors/ValidationFailed';
 
 const formFields = {
   _id: null,

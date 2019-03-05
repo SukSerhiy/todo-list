@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-const Home = () => {
+const HomePage = () => {
   return (
     <Fragment>
       Welcome
@@ -8,4 +8,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default HomePage;
