@@ -9,7 +9,7 @@ const withSetUser = WrappedComponent => {
       const { setUser } = props;
       setUser(user);
       setCookie('username', user.username);
-        setCookie('email', user.email);
+      setCookie('email', user.email);
     }
 
     return (<WrappedComponent setUser={setUser} />);
