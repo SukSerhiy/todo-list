@@ -7,6 +7,7 @@ const SignUpPage = props => {
   const { doSignUp } = props;
   return (
     <div className='auth'>
+      <h3>Sign Up</h3>
       <div className='auth-form-container'>
         <SignUpForm onSubmit={doSignUp} />
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 import LoginForm from './LoginForm';
 import './style.css';
 
@@ -13,7 +14,10 @@ const AuthPage = props => {
           className='auth-form'
           onSubmit={doLogIn}
         />
-    </div>
+        <div className='sign-up-note'>
+        <span>Have no account yet?</span><Link to='/signUp'>Sign Up</Link>
+        </div>
+      </div>
   </div>)
 }
 

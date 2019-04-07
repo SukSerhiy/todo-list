@@ -1,7 +1,7 @@
 header {
   background-color: #55574e;
-  width: 97%;
-  padding: 12px 1.5% 12px;
+  width: 100%;
+  padding: 12px var(--side-padding) 12px;
   float: left;
   position: fixed;
   z-index: 2000;

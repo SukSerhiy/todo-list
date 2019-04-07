@@ -1,12 +1,12 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  app = express(),
   tasksController = require('./controllers/tasks'),
   userController = require('./controllers/users'),
   config = require('./config'),
   cookieParser = require('cookie-parser'),
-  ensureAuthenticated = require('./middleware').ensureAuthenticated;
+  ensureAuthenticated = require('./middleware').ensureAuthenticated,
+  app = express();
 
 port = 5000;
 global.app = app;

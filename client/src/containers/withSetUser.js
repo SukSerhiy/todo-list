@@ -12,7 +12,7 @@ const withSetUser = WrappedComponent => {
       setCookie('email', user.email);
     }
 
-    return (<WrappedComponent setUser={setUser} />);
+    return (<WrappedComponent {...props} setUser={setUser} />);
   }
 
   const mapDispatchToProps = dispatch => ({

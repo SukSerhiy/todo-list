@@ -143,7 +143,7 @@ class SignUpForm extends Component {
         </Form.Item>
 
         <Button onClick={this.onSubmit}>
-          Sign in
+          Sign Up
         </Button>
       </Form>}
     </Fragment>

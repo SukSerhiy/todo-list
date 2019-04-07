@@ -21,3 +21,13 @@
   background-color: #13ce66;
   border-color: #13ce66;
 }
+
+.auth .sign-up-note {
+  font-size: 0.83em;
+  text-align: left;
+  margin-top: 12px;
+}
+
+.auth .sign-up-note a {
+  float: right;
+}

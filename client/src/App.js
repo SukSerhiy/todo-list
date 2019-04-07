@@ -1,19 +1,23 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Router } from 'react-router';
-import { Route } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
-import { Header } from './components/Header';
+import { Route, Redirect, withRouter } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import AuthContainer from './containers/AuthContainer';
 import SignUpContainer from './containers/SignUpContainer';
 import TaskContainer from './containers/TaskContainer';
 import HomePage from './components/HomePage';
-import { getCookie } from './utils/cookieHelper'
-import { setUser } from './actions/user';
+import { getCookie, deleteCookie } from './utils/cookieHelper';
+import { setUser, unsetUser } from './actions/user';
 import SAlert from './SAlert';
 import './App.css';
 
-const history = createHistory();
+const footerInfo = {
+  contactInfo: {
+    Developer: 'Suk Serhiy',
+    Email: 'sukserhiy@gmail.com'
+  }
+};
 
 class App extends PureComponent {
   componentDidMount() {
@@ -25,25 +29,58 @@ class App extends PureComponent {
     }
   }
 
+  linkToSignIn = () => {
+    const { user, history, location: { pathname } } = this.props;
+    if (!user && pathname !== '/logIn') {
+      history.push('/logIn');
+    }
+  }
+
+  signOut = () => {
+    const { history, location: { pathname }, unsetUser } = this.props;
+    unsetUser();
+    deleteCookie('username');
+    deleteCookie('email');
+    deleteCookie('token');
+    if (pathname === 'tasks') {
+      history.push('/');
+    }
+  }
+
   render() {
     const { user } = this.props;
     return (
       <Fragment>
         <Header
-          name='TODO-list'
+          username={user && user.username}
+          signIn={this.linkToSignIn}
+          signOut={this.signOut}
         />
         <main>
-          <Router history={history}>
-            <Fragment>
-              <Route path='/' exact render={(props) => (<HomePage {...props}  />)} />
-              <Route path='/login' exact render={(props) => (<AuthContainer {...props}  />)} />
-              {user ? 
-                (<Route path='/tasks' exact render={(props) => (<TaskContainer {...props}  />)} />)
-              : (<Route path='/tasks' exact render={(props) => (<AuthContainer {...props} />)} />)}
-              {!user && (<Route path='/signUp' exact render={(props) => (<SignUpContainer {...props}  />)} />)}
-            </Fragment>
-          </Router>
+            <Route path='/' exact render={props => (<HomePage {...props}  />)} />
+            <Route exact path='/login' render={props => (
+              user ? (
+                <Redirect to='/'/>
+              ) : (
+                <AuthContainer {...props}  />
+              )
+            )}/>
+            <Route exact path='/tasks' render={props => (
+              user ? (
+                <TaskContainer {...props}  />
+              ) : (
+                <AuthContainer {...props}  />
+              )
+            )}/>
+            <Route exact path='/signUp' render={props => (
+              user ? (
+                <Redirect to='/'/>
+              ) : (
+                <SignUpContainer {...props}  />
+              )
+            )}/>
         </main>
+        <Footer { ...footerInfo } />
         <SAlert />
       </Fragment>
     );
@@ -56,7 +93,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setUser: payload => dispatch(setUser(payload))
+  setUser: payload => dispatch(setUser(payload)),
+  unsetUser: payload => dispatch(unsetUser(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

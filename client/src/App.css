@@ -1,5 +1,5 @@
 main {
   background-color: #fffdd0;
-  padding: 82px 1.5% 10px;
-  height: calc(100% - 92px);
+  padding: 82px var(--side-padding) 10px;
+  height: calc(100% - var(--footer-height));
 }

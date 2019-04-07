@@ -6,7 +6,7 @@ import Alert from 'react-s-alert';
 const TIMEOUT = 2000;
 
 const SuccessAlert =  (message) => (
-  Alert.error(message, {
+  Alert.success(message, {
     position: 'bottom',
     effect: 'slide',
     timeout: TIMEOUT
@@ -14,7 +14,7 @@ const SuccessAlert =  (message) => (
 );
 
 const ErrorAlert =  (message) => (
-  Alert.success(message, {
+  Alert.error(message, {
     position: 'bottom',
     effect: 'slide',
     timeout: TIMEOUT

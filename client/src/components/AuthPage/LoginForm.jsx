@@ -72,7 +72,7 @@ class LoginForm extends Component {
         </Form.Item>
 
         <Button onClick={() => onSubmit(email, password)}>
-          Sign in
+          Sign In
         </Button>
       </Form>}
     </Fragment>

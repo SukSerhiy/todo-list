@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 const HomePage = () => {
   return (
-    <Fragment>
-      Welcome
-    </Fragment>
+    <div className='home-page'>
+    </div>
   )
 }
 

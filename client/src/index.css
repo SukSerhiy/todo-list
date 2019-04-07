@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Suez+One');
 
+:root {
+  --footer-height: 100px;
+  --side-padding: 1.5%;
+  --footer-bg-color: #2A2E37;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,4 +21,8 @@ html, body, #root {
 body {
   background-color: #fafafa;
   font-family: Trebuchet MS, Helvetica;
+}
+
+#root > * {
+  box-sizing: border-box;
 }
